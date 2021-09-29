@@ -6,5 +6,6 @@ for (let i = 0; i < messages.length; i++) {
 
     setTimeout(() => {
         messages[i].innerText = '';
-    }, 2500);
+        window.history.pushState({}, document.title, "/" + "login");
+    }, 3200);
 }

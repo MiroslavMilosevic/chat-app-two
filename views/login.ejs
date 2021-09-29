@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,24 +8,38 @@
     <link rel="stylesheet" href="css/login.css">
     <title>Document</title>
 </head>
+
 <body>
-    <h1>LOGIN EJS PAGE</h1>
- 
-     <form action="/login" method="POST">
-    
-    <input type="text" name="username">
-    <input type="password" name="password">
-    <input type="submit" value="LOG IN">
-          
-    </form>
-    
-    <p class="message-temp"><%= statuses.jwt %> </p>
-    <p class="message-temp"><%= statuses.login %> </p>
+
+    <div class="page-wrapper">
+
+        <h1>LOG IN TO CHAT</h1>
+
+
+        <form action="/login" method="POST">
+            <div class="input-wrapper-grid">
+                <div class="grid-inputs">
+                    <input type="text" required name="username" class="input-class left" placeholder="Username">
+                    <input type="password" required name="password" class="input-class right" placeholder="Password">
+                </div>
+                <div class="grid-submit">
+                <input type="submit" value="LOG IN" class="submit-class">
+            </div>
+            </div>
+        </form>
+
+        <p class="message-temp">
+            <%= statuses.jwt %>
+        </p>
+        <p class="message-temp">
+            <%= statuses.login %>
+        </p>
 
 
 
-
+    </div>
 
     <script src="./js/login-script.js"></script>
 </body>
+
 </html>

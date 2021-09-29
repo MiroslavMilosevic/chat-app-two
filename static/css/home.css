@@ -1,0 +1,34 @@
+body, html{
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
+    background-color:rgb(167, 160, 160);
+
+}
+
+.content-wrapper{
+    width:100%;
+    height:100%;
+
+}
+
+.chats-wrapper-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+}
+
+.one-chat-grid{
+    min-height: 50px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 5fr 1fr;
+    cursor: pointer;
+    background-color:rgb(148, 148, 148);
+    transition: all 0.1s;
+
+}
+.one-chat-grid:hover{
+    background-color:rgb(114, 114, 114);
+}

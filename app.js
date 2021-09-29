@@ -8,7 +8,7 @@ const getMockJwt = require('./middleware/getMockJwt');
 const jwtIsCorrect = require('./middleware/jwtIsCorrect');
 const mongoose = require('mongoose');
 const addUserMongoDB = require('./middleware/addUserMongoDB');
-
+const getUsersMongoDb = require('./middleware/getUsersMongoDb');
 /////APP.USE AND APP.SET
 app.set('view engine', 'ejs');
 app.use(cookieParser());
@@ -19,6 +19,13 @@ app.use(express.urlencoded({ extended: true }))
 
 
 app.get('/login', (req, res) => {
+   
+  // let user_data_cookies = req.cookies.user;
+  // if(user_data_cookies){
+  //   user_data_cookies = JSON.parse(user_data_cookies);
+  // }
+  // console.log(user_data_cookies);
+
    let jwt_status = req.query.jwt_status;
    let login_status = req.query.login_status;
     res.render('login',{statuses:{jwt:jwt_status, login:login_status}});
@@ -26,7 +33,6 @@ app.get('/login', (req, res) => {
 
 app.post('/login',async (req, res) => {
   let login_response = await loginFnk(req.body);
-  console.log(login_response);
     if (login_response[0] == true) {
         res.cookie('jwt', getMockJwt(), { maxAge: 1000*60, httpOnly: true });
         res.cookie('user', JSON.stringify(login_response[1]), {maxAge: 1000*60, httpOnly:true})
@@ -37,15 +43,23 @@ app.post('/login',async (req, res) => {
 
 })
 
-app.get('/home', (req, res)=>{
-
+app.get('/home', async(req, res)=>{
     if(req.cookies.jwt !== undefined && jwtIsCorrect(req.cookies.jwt)){
-    res.render('home',{jwt:req.cookies.jwt});
+    let users = await getUsersMongoDb();
+    res.render('home',{jwt:req.cookies.jwt, users:users});
     }else{
         res.redirect(`/login?jwt_status=${"your session has expried or you have wrong session id"}`)
     }
 
 })
+
+app.get('/chat', async(req, res)=>{
+        let chat_id = req.query.id;
+
+        res.render('chat', {id:chat_id})
+
+})
+
 
 app.get("/",(req, res) => {
     if(req.cookies.jwt !== undefined && jwtIsCorrect(req.cookies.jwt)){
