@@ -11,23 +11,24 @@
     <div class="page-wrapper">
     <h1>HOME PAGE</h1>
     
-    <!-- <h2>   <%= jwt %>     </h2>
-    <h2> <%= users.length %>  </h2> -->
+
 
     <div class="content-wrapper">
 
            <div class="chats-wrapper-grid">
 
             <% for(let i=0; i < users.length; i++){%> 
-
-
+                   
+               <% if(users[i]._id != user._id){ %> 
+                       <!-- <h1><%= users[i]._id %> </h1>
+                       <h3><%= user._id %> </h3> -->
                       <div class="one-chat-grid"  data-user_id=<%= users[i]._id %> >
                            <div class="img-div p-one-chat-grid"></div>
                            <div class="username-chat p-one-chat-grid"><%= users[i].username %> </div>
                            <div class="time-chat p-one-chat-grid"></div>
                       </div>
 
-                <%  } %> 
+                <%}  } %> 
            </div>
 
     </div>

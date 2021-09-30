@@ -9,6 +9,10 @@ const jwtIsCorrect = require('./middleware/jwtIsCorrect');
 const mongoose = require('mongoose');
 const addUserMongoDB = require('./middleware/addUserMongoDB');
 const getUsersMongoDb = require('./middleware/getUsersMongoDb');
+const decodeUserCookie = require('./middleware/decodeUserCookie')
+const getUserByIdMongoDB = require('./middleware/getUserByIdMongoDB');
+const sendMessageMongoDb = require('./middleware/sendMessageMongoDb');
+const getMessagesMongoDb = require('./middleware/getMessagesMongoDb')
 /////APP.USE AND APP.SET
 app.set('view engine', 'ejs');
 app.use(cookieParser());
@@ -20,22 +24,25 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get('/login', (req, res) => {
    
-  // let user_data_cookies = req.cookies.user;
-  // if(user_data_cookies){
-  //   user_data_cookies = JSON.parse(user_data_cookies);
-  // }
-  // console.log(user_data_cookies);
-
    let jwt_status = req.query.jwt_status;
    let login_status = req.query.login_status;
     res.render('login',{statuses:{jwt:jwt_status, login:login_status}});
 });
 
+app.use( async(req,res)=>{
+//   let d1= Date.parse("Wed Sep 29 2021 14:33:52 GMT+0200 (Central European Summer Time)")
+//   let d2= Date.parse("Wed Sep 29 2021 14:29:22 GMT+0200 (Central European Summer Time)")
+// console.log(d1 > d2);
+getMessagesMongoDb('61518164fd074fdc7a328de0','61518141e720a3fb4a72d439')
+  // let response = await sendMessageMongoDb(`61518164fd074fdc7a328de0`,`615448af7ca4dd7d9031d845`,`probna poruka 1`);
+  req.next();
+})
+
 app.post('/login',async (req, res) => {
   let login_response = await loginFnk(req.body);
     if (login_response[0] == true) {
-        res.cookie('jwt', getMockJwt(), { maxAge: 1000*60, httpOnly: true });
-        res.cookie('user', JSON.stringify(login_response[1]), {maxAge: 1000*60, httpOnly:true})
+        res.cookie('jwt', getMockJwt(), { maxAge: 1000*160, httpOnly: true });
+        res.cookie('user', JSON.stringify(login_response[1]), {maxAge: 1000*160, httpOnly:true})
         res.redirect('/home')
     } else {
          res.redirect(`/login?login_status=${"username or password incorrect"}`);
@@ -46,7 +53,8 @@ app.post('/login',async (req, res) => {
 app.get('/home', async(req, res)=>{
     if(req.cookies.jwt !== undefined && jwtIsCorrect(req.cookies.jwt)){
     let users = await getUsersMongoDb();
-    res.render('home',{jwt:req.cookies.jwt, users:users});
+    let user = decodeUserCookie(req.cookies.user);
+    res.render('home',{jwt:req.cookies.jwt, users:users, user:user});
     }else{
         res.redirect(`/login?jwt_status=${"your session has expried or you have wrong session id"}`)
     }
@@ -54,10 +62,16 @@ app.get('/home', async(req, res)=>{
 })
 
 app.get('/chat', async(req, res)=>{
-        let chat_id = req.query.id;
+  if(req.cookies.jwt !== undefined && jwtIsCorrect(req.cookies.jwt)){
+    let chat_id = req.query.id;
+    let other_user = await getUserByIdMongoDB(chat_id);
+    let user = decodeUserCookie(req.cookies.user);
 
-        res.render('chat', {id:chat_id})
-
+        res.render('chat', {other_user:other_user, user:user});
+    }else{
+        res.redirect(`/login?jwt_status=${"your session has expried or you have wrong session id"}`)
+    }
+      
 })
 
 
@@ -71,7 +85,7 @@ app.get("/",(req, res) => {
 })
 
 // app.get('/add-user', (req, res)=>{
-//     addUserMongoDB("w", "w", "w");
+//     addUserMongoDB("user3", "user3", "user3");;
 //     res.send({text:"user succsessfuly added"})
 // })
 

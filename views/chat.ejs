@@ -4,9 +4,41 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat <%= id %>  </title>
+    <link rel="stylesheet" href="css/chat.css">
+    <title>Chat with <%= other_user.username %>  </title>
 </head>
 <body>
-    
+    <h2>this you chat with user <%= other_user.username %> </h2>
+
+    <div class="page-wrapper">
+
+
+        <div class="message-wrapper-grid">
+
+          <div class="one-message left-message-grid">
+            <div class="message">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, natus distinctio numquam molestias autem repellat, deleniti quidem totam sed et, nesciunt officia.</div><div class="time"></div><div class="empty"></div>
+          </div>
+            <div class="one-message left-message-grid">
+            <div class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, reiciendis!</div><div class="time"></div><div class="empty"></div>
+          </div>
+          <div class="one-message right-message-grid">
+            <div class="empty"></div><div class="time">2.25pm</div><div class="message">Lorem ipsum dolor sit amet.</div>
+          </div>
+          <div class="one-message right-message-grid">
+            <div class="empty"></div><div class="time"></div><div class="message">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium doloribus placeat adipisci omnis, harum laboriosam eaque asperiores suscipit. Hic mollitia suscipit ipsum praesentium voluptates pariatur voluptatem perspiciatis sapiente quasi numquam. Neque voluptatibus maxime officiis voluptas provident eius temporibus nam dicta. Nobis, beatae eligendi eius aut quia quam dolor ratione tenetur.</div>
+          </div>
+          <div class="one-message left-message-grid">
+            <div class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, reiciendis!</div><div class="time"></div><div class="empty"></div>
+          </div>
+
+
+
+
+        </div>
+
+
+
+</div>
+
 </body>
 </html>
