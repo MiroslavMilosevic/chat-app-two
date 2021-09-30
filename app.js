@@ -29,14 +29,11 @@ app.get('/login', (req, res) => {
     res.render('login',{statuses:{jwt:jwt_status, login:login_status}});
 });
 
-app.use( async(req,res)=>{
-//   let d1= Date.parse("Wed Sep 29 2021 14:33:52 GMT+0200 (Central European Summer Time)")
-//   let d2= Date.parse("Wed Sep 29 2021 14:29:22 GMT+0200 (Central European Summer Time)")
-// console.log(d1 > d2);
-getMessagesMongoDb('61518164fd074fdc7a328de0','61518141e720a3fb4a72d439')
-  // let response = await sendMessageMongoDb(`61518164fd074fdc7a328de0`,`615448af7ca4dd7d9031d845`,`probna poruka 1`);
-  req.next();
-})
+// app.use( async(req,res)=>{
+
+//   //  let response = await sendMessageMongoDb(`61518164fd074fdc7a328de0`,`61518141e720a3fb4a72d439`,`asdfasd`);
+//   req.next();
+// })
 
 app.post('/login',async (req, res) => {
   let login_response = await loginFnk(req.body);
@@ -67,7 +64,8 @@ app.get('/chat', async(req, res)=>{
     let other_user = await getUserByIdMongoDB(chat_id);
     let user = decodeUserCookie(req.cookies.user);
 
-        res.render('chat', {other_user:other_user, user:user});
+    let messages_sorted_desc = await getMessagesMongoDb(user._id,other_user._id);
+        res.render('chat', {other_user:other_user, user:user, messages:messages_sorted_desc});
     }else{
         res.redirect(`/login?jwt_status=${"your session has expried or you have wrong session id"}`)
     }

@@ -12,9 +12,14 @@
 
     <div class="page-wrapper">
 
+      <div class="input-and-message-wrapper-grid">
+        <div class="message-wrapper-grid" id="message-window">
 
-        <div class="message-wrapper-grid">
 
+          <div class="one-message left-message-grid">
+            <div class="message">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, natus distinctio numquam molestias autem repellat, deleniti quidem totam sed et, nesciunt officia.</div><div class="time"></div><div class="empty"></div>
+          </div>
+<!-- 
           <div class="one-message left-message-grid">
             <div class="message">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, natus distinctio numquam molestias autem repellat, deleniti quidem totam sed et, nesciunt officia.</div><div class="time"></div><div class="empty"></div>
           </div>
@@ -29,16 +34,47 @@
           </div>
           <div class="one-message left-message-grid">
             <div class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, reiciendis!</div><div class="time"></div><div class="empty"></div>
-          </div>
+          </div> -->
 
+                <h1><%= messages.length %> </h1>
+           <% for(let i = 0; i < messages.length; i++){ %> 
+                  
+            <% if(messages[i].from_id == user._id){ %> 
+              <div class="one-message right-message-grid">
+                <div class="empty"></div><div class="time">2.25pm</div><div class="message"><%= messages[i].text %></div>
+              </div>
 
+              <% }else if(messages[i].from_id == other_user._id){ %> 
+                <div class="one-message left-message-grid">
+                  <div class="message"><%= messages[i].text %> </div><div class="time">2.25pm</div><div class="empty"></div>
+                </div>
+                    <% } %>  
 
+                    <!-- <% if(i===messages.length-1){   %> 
+                         
+                      <div class="one-message left-message-grid" id="autofocus" autofocus >
+                        <div class="message"> AUTOFOCUS </div><div class="time">2.25pm</div><div class="empty"></div>
+                      </div>   
+    
+                      <% } %>  -->
+            <% } %> 
 
+            <!-- <div></div> -->
         </div>
-
-
+          <div class="message-input-holder">
+            <input type="text" name="" class="input-message" id="input_message">
+            <button class="button-holder" id="send">
+              Send
+            </button>
+          </div>
+      
+      </div>
 
 </div>
 
+<div id="users-data" style="display: none" data-user=<%= JSON.stringify(user) %> 
+  data-other_user=<%= JSON.stringify(other_user) %> ></div>
+
+<script src="/js/chat-script.js"></script>
 </body>
 </html>
