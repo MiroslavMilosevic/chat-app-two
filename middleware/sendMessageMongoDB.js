@@ -1,14 +1,14 @@
 const Message = require('../db/messages');
 
 
-async function sendMessageMongoDb(id, other_id,text){
+async function sendMessageMongoDb(body){
 
     const message = new Message
     ({
        
-        from_id:id,
-        to_id:other_id,
-        text:text,
+        from_id:body.from,
+        to_id:body.to,
+        text:body.text,
         sent_date:new Date()
     });
 

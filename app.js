@@ -1,23 +1,27 @@
 
 const express = require('express');
 const app = express();
-const CONSTS = require('./data_local/consts')
-const loginFnk = require('./middleware/loginFnk')
-const cookieParser = require('cookie-parser')
+const CONSTS = require('./data_local/consts');
+const loginFnk = require('./middleware/loginFnk');
+const cookieParser = require('cookie-parser');
 const getMockJwt = require('./middleware/getMockJwt');
 const jwtIsCorrect = require('./middleware/jwtIsCorrect');
 const mongoose = require('mongoose');
 const addUserMongoDB = require('./middleware/addUserMongoDB');
 const getUsersMongoDb = require('./middleware/getUsersMongoDb');
-const decodeUserCookie = require('./middleware/decodeUserCookie')
+const decodeUserCookie = require('./middleware/decodeUserCookie');
 const getUserByIdMongoDB = require('./middleware/getUserByIdMongoDB');
 const sendMessageMongoDb = require('./middleware/sendMessageMongoDb');
-const getMessagesMongoDb = require('./middleware/getMessagesMongoDb')
+const getMessagesMongoDb = require('./middleware/getMessagesMongoDb');
+const deleteChatMongoDb = require('./middleware/deleteChatMongoDb');;
+// const prepareForStringyfy = require('./middleware/prepareForStringyfy')
+
 /////APP.USE AND APP.SET
 app.set('view engine', 'ejs');
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }))
- app.use(express.static('./static'))
+app.use(express.urlencoded({ extended: true }));
+ app.use(express.static('./static'));
+ app.use(express.json());
 //app.use(express.static('./static/js'))
 /////APP.USE AND APP.SET
 
@@ -38,8 +42,8 @@ app.get('/login', (req, res) => {
 app.post('/login',async (req, res) => {
   let login_response = await loginFnk(req.body);
     if (login_response[0] == true) {
-        res.cookie('jwt', getMockJwt(), { maxAge: 1000*160, httpOnly: true });
-        res.cookie('user', JSON.stringify(login_response[1]), {maxAge: 1000*160, httpOnly:true})
+        res.cookie('jwt', getMockJwt(), { maxAge: 1000*360, httpOnly: true });
+        res.cookie('user', JSON.stringify(login_response[1]), {maxAge: 1000*360, httpOnly:true})
         res.redirect('/home')
     } else {
          res.redirect(`/login?login_status=${"username or password incorrect"}`);
@@ -65,6 +69,7 @@ app.get('/chat', async(req, res)=>{
     let user = decodeUserCookie(req.cookies.user);
 
     let messages_sorted_desc = await getMessagesMongoDb(user._id,other_user._id);
+    // console.log(user,other_user);
         res.render('chat', {other_user:other_user, user:user, messages:messages_sorted_desc});
     }else{
         res.redirect(`/login?jwt_status=${"your session has expried or you have wrong session id"}`)
@@ -86,6 +91,29 @@ app.get("/",(req, res) => {
 //     addUserMongoDB("user3", "user3", "user3");;
 //     res.send({text:"user succsessfuly added"})
 // })
+
+app.post('/send-message', async(req, res)=>{
+    let writen_message = await sendMessageMongoDb(req.body.message)
+    let query_id = req.body.message.query_id;
+    let user = decodeUserCookie(req.cookies.user);
+    let updated_messages = await getMessagesMongoDb(user._id, query_id);
+    res.json(updated_messages);
+});
+
+// app.get("/test",async(req, res)=>{
+//    let deleteChatRes = deleteChatMongoDb('61518164fd074fdc7a328de0','61518141e720a3fb4a72d439')
+// //    let test_data = await getMessagesMongoDb("61518164fd074fdc7a328de0", "61518141e720a3fb4a72d439");
+//    console.log(deleteChatRes);
+// })
+
+app.get("/msg-api", async(req, res)=>{
+    console.log("__________________________________________________________________");
+    console.log("this is id of user:",req.query.id_user);
+    console.log("this is id of other:",req.query.id_other);
+    console.log("__________________________________________________________________");
+    let updated_messages = await getMessagesMongoDb(req.query.id_user, req.query.id_other);
+    res.json(updated_messages)
+})
 
 app.use((req, res)=>{
     res.json({ status: 'page not found' })

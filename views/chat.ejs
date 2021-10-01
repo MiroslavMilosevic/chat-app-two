@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="css/chat.css">
     <title>Chat with <%= other_user.username %>  </title>
 </head>
@@ -16,9 +17,7 @@
         <div class="message-wrapper-grid" id="message-window">
 
 
-          <div class="one-message left-message-grid">
-            <div class="message">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, natus distinctio numquam molestias autem repellat, deleniti quidem totam sed et, nesciunt officia.</div><div class="time"></div><div class="empty"></div>
-          </div>
+      
 <!-- 
           <div class="one-message left-message-grid">
             <div class="message">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, natus distinctio numquam molestias autem repellat, deleniti quidem totam sed et, nesciunt officia.</div><div class="time"></div><div class="empty"></div>
@@ -71,9 +70,9 @@
       </div>
 
 </div>
-
-<div id="users-data" style="display: none" data-user=<%= JSON.stringify(user) %> 
-  data-other_user=<%= JSON.stringify(other_user) %> ></div>
+<!-- <h2><%= JSON.stringify(other_user) %></h2>
+<h2><%= JSON.stringify(user) %></h2> -->
+<div id="users-data" style="display: none" data-user="<%= JSON.stringify(user)%>" data-other="<%= JSON.stringify(other_user) %>" ></div>
 
 <script src="/js/chat-script.js"></script>
 </body>
