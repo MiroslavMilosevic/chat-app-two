@@ -30,6 +30,7 @@ app.get('/login', (req, res) => {
    
    let jwt_status = req.query.jwt_status;
    let login_status = req.query.login_status;
+   console.log(jwt_status, login_status);
     res.render('login',{statuses:{jwt:jwt_status, login:login_status}});
 });
 
@@ -43,7 +44,9 @@ app.post('/login',async (req, res) => {
   let login_response = await loginFnk(req.body);
     if (login_response[0] == true) {
         res.cookie('jwt', getMockJwt(), { maxAge: 1000*360, httpOnly: true });
-        res.cookie('user', JSON.stringify(login_response[1]), {maxAge: 1000*360, httpOnly:true})
+        res.cookie('user', JSON.stringify(login_response[1]), {maxAge: 1000*360});
+        // res.cookie('blabla', "adsfasdfads", {maxAge: 1000*60})
+
         res.redirect('/home')
     } else {
          res.redirect(`/login?login_status=${"username or password incorrect"}`);
@@ -63,9 +66,17 @@ app.get('/home', async(req, res)=>{
 })
 
 app.get('/chat', async(req, res)=>{
-  if(req.cookies.jwt !== undefined && jwtIsCorrect(req.cookies.jwt)){
+    
+  if(req.query.id && req.cookies.jwt !== undefined && jwtIsCorrect(req.cookies.jwt)){
     let chat_id = req.query.id;
+    // console.log("__________________________________________________________________");
+    // console.log(chat_id, typeof chat_id);
+    // console.log("__________________________________________________________________");
     let other_user = await getUserByIdMongoDB(chat_id);
+
+if( ! other_user){
+    res.redirect(`/login?jwt_status=${"you should not acess chat via url"}`)
+}
     let user = decodeUserCookie(req.cookies.user);
 
     let messages_sorted_desc = await getMessagesMongoDb(user._id,other_user._id);
@@ -123,7 +134,8 @@ app.use((req, res)=>{
 const dbURI = 'mongodb+srv://user1:12345@mycluster.dc55z.mongodb.net/chatapp?retryWrites=true&w=majority'
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }).then(res => {
   console.log('connected')
-  app.listen(process.env.PORT || CONSTS.PORT, () => { console.log("listening at port 3000"); })
+  const PORT = process.env.PORT || CONSTS.PORT;
+  app.listen(PORT, () => { console.log(`listening at port ${PORT}`); })
 }).catch(err => {
   console.log('error hapened');
 });

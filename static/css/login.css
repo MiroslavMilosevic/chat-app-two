@@ -1,11 +1,16 @@
 body, html{
-    background-color:rgb(148, 148, 148);
+ 
     width:100%;
     height:100%;
     margin:0;
     padding:0;
     text-align:center;
+    color: white;
 
+}
+html{
+    background-image: url("https://images.pexels.com/photos/169789/pexels-photo-169789.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+    background-repeat: no-repeat;
 }
 .left{
 margin-right: 5px;
@@ -19,6 +24,7 @@ margin-left:5px;
     display: grid;
     grid-auto-rows:1fr 1fr;
      grid-template-columns:1fr;
+     margin-top: 20%;
 }
 
 .page-wrapper{
@@ -26,12 +32,13 @@ margin-left:5px;
     width:100%;
     margin:0 auto;
     max-width: 700px;
+
 }
 
 .input-class{
 height:25px;
-/* margin-left: 5px;
-margin-right: 5px; */
+background-color: #1e2f8d3f;
+color: white;
 }
 
 form{
@@ -48,11 +55,64 @@ form{
 }
 
 .submit-class{
-    width: 100%;
+    width: 80%;
     height: 100%;
+    background-color: #1e2f8d3f;
+    color: #fff;
 }
 
 .message-temp{
     color: rgb(255, 255, 255);
     font-size:x-large;
 }
+
+.input_holder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-explanation{
+    margin-top:10px;
+    width: 45px;
+    height: 45px;
+    background-color: rgba(255, 255, 255, 0.300);
+    transition: all 0.4s;
+}
+.img-explanation:hover
+{   
+    
+    background-color: rgba(255, 255, 255, 0.700)
+
+
+}
+
+.explanation-wrapper{
+
+    margin-top: 60%;
+}
+
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.650); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+  }
+
+  .explanation-text{
+    background-color: rgba(0, 0, 0, 0.650);
+      text-align: center;
+      color: white;
+      margin: 20% 0% 20% 0%;
+      padding-left: 7%;
+      padding-right: 7%;
+      word-break: break-word;
+  }

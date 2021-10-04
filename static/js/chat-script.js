@@ -1,3 +1,12 @@
+if( ! getCookieValue("user")){
+  window.location.href = "/login";
+}
+setInterval(() => {
+if( ! getCookieValue("user")){
+  window.location.href = "/login";
+}
+}, 200);
+
 let scrolling = 0;
 window.onload = function () {
   let message_window = document.getElementById('message-window');
@@ -15,34 +24,37 @@ axios.get(`/msg-api?id_user=${user._id}&id_other=${other_user._id}`).then(res =>
 
 
 setInterval(() => {
-  console.log("scroling = ", scrolling);
+  let isCookieActive = getCookieValue("user");
+  if (!isCookieActive) {
+    window.location.href = "/login";
+    return;
+  }
+
+  // console.log("scroling = ", scrolling);
   axios.get(`/msg-api?id_user=${user._id}&id_other=${other_user._id}`).then(res => {
     niz = res.data;
     rpnt_message_box(niz);
-    if(scrolling === 0){
-    console.log("fokusira");;
-    let message_window = document.getElementById('message-window');
-    message_window.scrollTop = message_window.scrollHeight;
+    if (scrolling === 0) {
+      //  console.log("fokusira");;
+      let message_window = document.getElementById('message-window');
+      message_window.scrollTop = message_window.scrollHeight;
     }
   })
 
-}, 500);
+}, 450);
 
 let box = document.getElementById('message-window');
-box.addEventListener('scroll', function(){
+box.addEventListener('scroll', function () {
   scrolling = 1;
-//console.log(box.offsetHeight,box.scrollTop, box.offsetTop,"|||", box.offsetHeight, box.clientHeight,"W", box.scrollHeight );
-// console.log(box.scrollHeight - box.offsetHeight);
-// console.log(box.scrollTop);
-// console.log((box.scrollHeight - box.offsetHeight)==Math.floor(box.scrollTop));
-// console.log((box.scrollHeight - box.offsetHeight)==Math.floor(box.scrollTop));
-// console.log((box.scrollHeight - box.offsetHeight),Math.floor(box.scrollTop));
-if((box.scrollHeight - box.offsetHeight)==Math.floor(box.scrollTop)||
-(box.scrollHeight - box.offsetHeight)==Math.floor(box.scrollTop)-1||
-(box.scrollHeight - box.offsetHeight)==Math.floor(box.scrollTop)+1
-){
- scrolling = 0;
-}
+
+  // console.log((box.scrollHeight - box.offsetHeight)==Math.floor(box.scrollTop));
+  // console.log((box.scrollHeight - box.offsetHeight),Math.floor(box.scrollTop));
+  if ((box.scrollHeight - box.offsetHeight) == Math.floor(box.scrollTop) ||
+    (box.scrollHeight - box.offsetHeight) == Math.floor(box.scrollTop) - 1 ||
+    (box.scrollHeight - box.offsetHeight) == Math.floor(box.scrollTop) + 1
+  ) {
+    scrolling = 0;
+  }
 })
 
 
@@ -92,18 +104,41 @@ function rpnt_message_box(niz) {
 
 }/// end of rpnt_message_box fnk
 
-
-
-
-
-
 let button_send = document.getElementById('send');
 button_send.addEventListener('click', function () {
   let input = document.getElementById('input_message');
-
+  if(input.value.trim().length > 0){
   sendMessageAxios(input.value.trim(), user._id, other_user._id);
   input.value = '';
   scrolling = 0;
+  }else{
+    //input.style.backgroundColor = 'ff00003f';
+   input.setAttribute('style', 'background-color: #ff00003f');
+    setTimeout(() => {
+      input.setAttribute('style', 'background-color: #3446a798');
+     // input.style.backgroundColor = '#3446a798';
+
+    }, 500);
+  }
+})
+
+let input_message = document.getElementById('input_message');
+input_message.addEventListener('keypress', e => {
+  if (e.key === 'Enter') {
+    if(e.target.value.trim().length > 0){
+      sendMessageAxios(e.target.value.trim(), user._id, other_user._id);
+      e.target.value = '';
+      scrolling = 0;
+    }else{
+      input_message.setAttribute('style', 'background-color: #ff00003f');
+      setTimeout(() => {
+        input_message.setAttribute('style', 'background-color: #3446a798');
+
+      }, 500);
+    }
+
+
+  }
 })
 
 function sendMessageAxios(text, from, to) {
@@ -113,4 +148,12 @@ function sendMessageAxios(text, from, to) {
     console.log(response);
   })
 
+}
+
+
+
+/////helper functions //
+
+function getCookieValue(name){
+  return document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
 }

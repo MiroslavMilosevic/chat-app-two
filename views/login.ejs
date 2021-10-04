@@ -13,21 +13,24 @@
 
     <div class="page-wrapper">
 
-        <h1>LOG IN TO CHAT</h1>
+        <!-- <h1>LOG IN TO CHAT</h1> -->
 
 
         <form action="/login" method="POST">
             <div class="input-wrapper-grid">
                 <div class="grid-inputs">
+                    <div class="username-input-holder input_holder">
                     <input type="text" required name="username" class="input-class left" placeholder="Username">
+                </div>
+                <div class="password-input-holder input_holder">
                     <input type="password" required name="password" class="input-class right" placeholder="Password">
+                </div>
                 </div>
                 <div class="grid-submit">
                 <input type="submit" value="LOG IN" class="submit-class">
             </div>
             </div>
         </form>
-
         <p class="message-temp">
             <%= statuses.jwt %>
         </p>
@@ -36,9 +39,53 @@
         </p>
 
 
+        <div class="explanation-wrapper">
 
+ <div class="explanation-div">
+  
+    <span class="span-how-to">How to use app?</span>
+    <br>
+          <img class="img-explanation" id="img-exp" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/question-2449908-2063813.png" alt="click here">
+       
+ </div>
+        </div> 
+   
     </div>
 
+  
+
+    <div id="overlay">
+
+
+        <section class="explanation-text">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. In error, quas nobis animi accusamus cupiditate labore, fugit eos veniam dolore ipsum odio officia, quaerat asperiores illo. Architecto aliquid, distinctio harum labore quibusdam cupiditate quo, pariatur aperiam odit asperiores facilis doloribus non quidem? Temporibus perspiciatis amet eaque explicabo atque dolores consequuntur.
+        </section>
+    </div>
+
+    <script>
+  
+        let counter = 0;
+        function on() {
+            counter=1;
+  document.getElementById("overlay").style.display = "block";
+}
+function off() {
+    counter=0;
+  document.getElementById("overlay").style.display = "none";
+}
+ let img_exp = document.getElementById('img-exp')
+ img_exp.addEventListener('click', ()=>{
+     if(counter===0){
+         on()
+     }else{
+         off()
+     }
+ })  
+ document.getElementById("overlay")
+          .addEventListener('click', ()=>{
+              off()
+          })
+   </script>
     <script src="./js/login-script.js"></script>
 </body>
 

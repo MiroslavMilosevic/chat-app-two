@@ -3,8 +3,12 @@ body, html{
     height:100%;
     margin:0;
     padding:0;
-    background-color:rgb(167, 160, 160);
+    color:white;
 
+}
+html{
+    background-image: url("https://images.pexels.com/photos/169789/pexels-photo-169789.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+    background-repeat: no-repeat;
 }
 
 .content-wrapper{
@@ -25,10 +29,21 @@ body, html{
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 5fr 1fr;
     cursor: pointer;
-    background-color:rgb(148, 148, 148);
-    transition: all 0.1s;
+    background-color: #1e2f8d3f;
+    transition: all 0.7s;
+    font-size:large;
 
 }
 .one-chat-grid:hover{
-    background-color:rgb(114, 114, 114);
+    background-color: #090f355d;
+}
+
+.h1-header{
+    text-align:center;
+}
+
+.p-one-chat-grid{
+    display:flex;
+    align-items:center;
+    font-size:x-large;
 }
