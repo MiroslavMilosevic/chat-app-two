@@ -1,10 +1,10 @@
-if( ! getCookieValue("user")){
+if (!getCookieValue("user")) {
   window.location.href = "/login";
 }
 setInterval(() => {
-if( ! getCookieValue("user")){
-  window.location.href = "/login";
-}
+  if (!getCookieValue("user")) {
+    window.location.href = "/login";
+  }
 }, 200);
 
 let scrolling = 0;
@@ -30,18 +30,17 @@ setInterval(() => {
     return;
   }
 
-  // console.log("scroling = ", scrolling);
   axios.get(`/msg-api?id_user=${user._id}&id_other=${other_user._id}`).then(res => {
     niz = res.data;
+    console.log(niz);
     rpnt_message_box(niz);
     if (scrolling === 0) {
-      //  console.log("fokusira");;
       let message_window = document.getElementById('message-window');
       message_window.scrollTop = message_window.scrollHeight;
     }
   })
 
-}, 450);
+}, 12450);
 
 let box = document.getElementById('message-window');
 box.addEventListener('scroll', function () {
@@ -73,7 +72,7 @@ function rpnt_message_box(niz) {
       div_empty.classList.add('empty');
       let div_time = document.createElement('div');
       div_time.classList.add('time');
-      div_time.innerText = "2.25pm";
+      div_time.innerHTML =formatDateString(niz[i].sent_date);
       let div_message = document.createElement('div');
       div_message.classList.add('message');
       div_message.innerText = niz[i].text;
@@ -89,7 +88,7 @@ function rpnt_message_box(niz) {
 
       let div_time = document.createElement('div');
       div_time.classList.add('time');
-      div_time.innerText = "2.25pm";
+      div_time.innerHTML =formatDateString(niz[i].sent_date);
 
       let div_empty = document.createElement('div');
       div_empty.classList.add('empty');
@@ -107,17 +106,15 @@ function rpnt_message_box(niz) {
 let button_send = document.getElementById('send');
 button_send.addEventListener('click', function () {
   let input = document.getElementById('input_message');
-  if(input.value.trim().length > 0){
-  sendMessageAxios(input.value.trim(), user._id, other_user._id);
-  input.value = '';
-  scrolling = 0;
-  }else{
+  if (input.value.trim().length > 0) {
+    sendMessageAxios(input.value.trim(), user._id, other_user._id);
+    input.value = '';
+    scrolling = 0;
+  } else {
     //input.style.backgroundColor = 'ff00003f';
-   input.setAttribute('style', 'background-color: #ff00003f');
+    input.setAttribute('style', 'background-color: #ff00003f');
     setTimeout(() => {
       input.setAttribute('style', 'background-color: #3446a798');
-     // input.style.backgroundColor = '#3446a798';
-
     }, 500);
   }
 })
@@ -125,11 +122,11 @@ button_send.addEventListener('click', function () {
 let input_message = document.getElementById('input_message');
 input_message.addEventListener('keypress', e => {
   if (e.key === 'Enter') {
-    if(e.target.value.trim().length > 0){
+    if (e.target.value.trim().length > 0) {
       sendMessageAxios(e.target.value.trim(), user._id, other_user._id);
       e.target.value = '';
       scrolling = 0;
-    }else{
+    } else {
       input_message.setAttribute('style', 'background-color: #ff00003f');
       setTimeout(() => {
         input_message.setAttribute('style', 'background-color: #3446a798');
@@ -154,6 +151,15 @@ function sendMessageAxios(text, from, to) {
 
 /////helper functions //
 
-function getCookieValue(name){
+function getCookieValue(name) {
   return document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+}
+
+function formatDateString(date) {
+
+let time = date.split(" ")[4];
+time = time.split(":")[0]+":"+time.split(":")[1];
+let month = date.split(" ")[1]+" "+date.split(" ")[2]
+date=month+"<br>"+time;
+return date;
 }

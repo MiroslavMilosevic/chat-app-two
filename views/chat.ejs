@@ -9,23 +9,19 @@
     <title>Chat with <%= other_user.username %>  </title>
 </head>
 <body>
-    <h2>this you chat with user <%= other_user.username %> </h2>
+    <h2>Your chat with user <%= other_user.username %> </h2>
 
     <div class="page-wrapper">
 
       <div class="input-and-message-wrapper-grid">
         <div class="message-wrapper-grid" id="message-window">
 
-
-      
-
-
                 <h1><%= messages.length %> </h1>
            <% for(let i = 0; i < messages.length; i++){ %> 
                   
             <% if(messages[i].from_id == user._id){ %> 
               <div class="one-message right-message-grid">
-                <div class="empty"></div><div class="time">2.25pm</div><div class="message"><%= messages[i].text %></div>
+                <div class="empty"></div><div class="time"><%= messages[i].sent_date %> ></div><div class="message"><%= messages[i].text %></div>
               </div>
 
               <% }else if(messages[i].from_id == other_user._id){ %> 
@@ -46,10 +42,14 @@
             <!-- <div></div> -->
         </div>
           <div class="message-input-holder">
+            <div class="input-flex">
             <input type="text" name="" class="input-message" id="input_message">
+          </div>
+          <div class="button-flex">
             <button class="button-holder" id="send">
               Send
             </button>
+          </div>
           </div>
       
       </div>

@@ -71,16 +71,36 @@ grid-template-columns: 5fr 1fr 2fr;
     height: 100%;
     max-height: 450px;
     display: grid;
-    grid-template-rows:8fr 1fr;
+    grid-template-rows:8fr 1.2fr;
+}
+
+/* .message-input-holder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.input-flex{
+display: flex;
+align-items: center;
+justify-content:center
+}
+.button-flex{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start
 }
 
 .message-input-holder{
     
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   
+    display: grid;
+    grid-template-rows:1fr;
+    grid-template-columns:8fr 1.5fr;
+}
 
+.button-holder{
+    width :80%;
+    height :60%;
 }
 
 
@@ -89,6 +109,7 @@ grid-template-columns: 5fr 1fr 2fr;
     font-size: large;
     height: 25px;
     background-color: #3446a798;
-    color: white
+    color: white;
 
+    border-radius:5px;
 }
