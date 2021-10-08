@@ -99,7 +99,7 @@ justify-content:center
 }
 
 .button-holder{
-    width :80%;
+    width :100%;
     height :60%;
 }
 
@@ -112,4 +112,25 @@ justify-content:center
     color: white;
 
     border-radius:5px;
+}
+
+.logout{
+    position: absolute;
+    font-size: x-large;
+    right: 15px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.back-arrow-img{
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+}
+
+.chat-header{
+    margin-top: 80px;
 }

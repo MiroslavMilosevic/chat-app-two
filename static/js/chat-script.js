@@ -40,7 +40,7 @@ setInterval(() => {
     }
   })
 
-}, 12450);
+}, 450);
 
 let box = document.getElementById('message-window');
 box.addEventListener('scroll', function () {
@@ -147,6 +147,17 @@ function sendMessageAxios(text, from, to) {
 
 }
 
+
+let logout_button = document.getElementById('logout-btn');
+logout_button.addEventListener('click', function (){
+
+axios.get('/logout').then(res=>{
+
+  window.location.href = "/login";
+  
+})
+
+})
 
 
 /////helper functions //

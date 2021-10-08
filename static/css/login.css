@@ -111,8 +111,23 @@ form{
     background-color: rgba(0, 0, 0, 0.650);
       text-align: center;
       color: white;
-      margin: 20% 0% 20% 0%;
+      margin: 10% 0% 20% 0%;
       padding-left: 7%;
       padding-right: 7%;
       word-break: break-word;
   }
+
+  @media screen and (min-width: 700px) {
+    .explanation-text{
+        font-size:large;
+        margin: 2% 0% 20% 0%;
+    }
+    .explanation-wrapper{
+        margin-top: 30%;
+    }
+  }
+  /* @media screen and (min-width: 1000px) {
+    .explanation-text{
+        font-size:xx-large;
+    }
+  } */

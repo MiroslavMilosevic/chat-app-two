@@ -10,10 +10,6 @@ for (let i = 0; i < messages.length; i++) {
     }, 3200);
 }
 
-
-
-
-
 let counter = 0;
 function on() {
     counter=1;

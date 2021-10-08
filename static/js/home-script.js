@@ -17,10 +17,21 @@ for (let i = 0; i < users_grids.length;i++){
 
         console.log(users_grids[i].dataset.user_id);
         window.location.href = `/chat?id=${users_grids[i].dataset.user_id}`;
-
+             
       });
 }
 
 function getCookieValue(name){
   return document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
 }
+
+let logout_button = document.getElementById('logout-btn');
+logout_button.addEventListener('click', function (){
+
+axios.get('/logout').then(res=>{
+
+  window.location.href = "/login";
+  
+})
+
+})

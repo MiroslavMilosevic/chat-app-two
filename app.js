@@ -13,7 +13,8 @@ const decodeUserCookie = require('./middleware/decodeUserCookie');
 const getUserByIdMongoDB = require('./middleware/getUserByIdMongoDB');
 const sendMessageMongoDb = require('./middleware/sendMessageMongoDb');
 const getMessagesMongoDb = require('./middleware/getMessagesMongoDb');
-const deleteChatMongoDb = require('./middleware/deleteChatMongoDb');;
+const deleteChatMongoDb = require('./middleware/deleteChatMongoDb');
+require('dotenv').config()
 // const prepareForStringyfy = require('./middleware/prepareForStringyfy')
 
 /////APP.USE AND APP.SET
@@ -99,7 +100,12 @@ app.get("/",(req, res) => {
 })
 
 // app.get('/add-user', (req, res)=>{
-//     addUserMongoDB("user3", "user3", "user3");;
+//     addUserMongoDB("John", "John123", "John");
+//     addUserMongoDB("Jennifer", "Jennifer123", "Jennifer");
+//     addUserMongoDB("Richard", "Richard123", "Richard");
+//     addUserMongoDB("Mark", "Mark123", "Mark");
+//     addUserMongoDB("Helen", "Helen123", "Helen");
+//     addUserMongoDB("Stephen", "Stephen123", "Stephen");
 //     res.send({text:"user succsessfuly added"})
 // })
 
@@ -125,13 +131,19 @@ app.get("/msg-api", async(req, res)=>{
     let updated_messages = await getMessagesMongoDb(req.query.id_user, req.query.id_other);
     res.json(updated_messages)
 })
+app.get('/logout', async(req, res)=>{
+
+    res.clearCookie("user");   
+    res.clearCookie("jwt");   
+    res.json({message : "all cookies cleared"})
+
+})
 
 app.use((req, res)=>{
     res.json({ status: 'page not found' })
 })
 
-
-const dbURI = 'mongodb+srv://user1:12345@mycluster.dc55z.mongodb.net/chatapp?retryWrites=true&w=majority'
+const dbURI = process.env.DB_CONNECTION;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }).then(res => {
   console.log('connected')
   const PORT = process.env.PORT || CONSTS.PORT;

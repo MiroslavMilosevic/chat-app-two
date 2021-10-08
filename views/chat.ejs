@@ -9,7 +9,11 @@
     <title>Chat with <%= other_user.username %>  </title>
 </head>
 <body>
-    <h2>Your chat with user <%= other_user.username %> </h2>
+  <div class="logout" id="logout-btn">Log out</div>
+<a href="/home">
+<img class="back-arrow-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAdVBMVEX///8jHyD8/PwdGBpMSUoAAAAgHB0JAAAeGhsYExQWEBLCwcHz8/OenZ17enoQCQsLAATs7Ozl5eWtq6w5NjdcWlqnpqbb2tvT0tJSUFCLiorIx8dpZ2hVU1OamZlwbm9FQkMrJyk1MjJ4dnc+OzwoJSaOjY32EwFQAAADNklEQVR4nO3d21riMBQFYNKSHrDQFlFkZBCK+v6POBQvRmlyt8uua6//CXY+dCVpTrMZEREREREREREREREREREREREREdEvkbStdgljag8n732+f9AuZCyHvMmcc1npd1vtWkax9337rsryVbuaEay8+6/wa+16xC2/N9C59KhdkLSHnw10zoPFzbrOblpY7rVrElV9FDcNdNmm0q5KUPJ3cdtAlxVIWbPKBw289IpALVzepsy1hR84w7dBjH51F3PtusRsBzF6VR+0C5PSbtJQAzMP80e6G8Zoz8P8hG9NsIE1TH8fjNHLgOaI0t2HYxSoL4zEqPMv2pUJqU7BGHX+UbsyKbEY/aNdmJRVJEaftAuTEovR90S7MiGxGE1RYnSdB2M08ygf2eBjNMGP0cCk3kSMbsBjtHAoMbpdhGM0R4nRtgOP0ehodKVdmJQ3qzGKM6mPDNYamBgNNxBoUu8GS0xgMRpYYurlOKPR8KR+gR6jaQc+GsWZ1Ee+jeKMRqvYaPRZuzIh+JP6c3g0Ch+jJcyOkliMZjAxWkZGo4zR32KOPqk/G11iSt/RYxRmD/Dao8focN/o1eJ5ltzVWA0M7Rv9spvf1W7/Oc6XoEiMXhTpfZW1fxrhP/8QThklpfze+NdJNXCEFfQkvK1SUeZk++Cp/YQXteh8uzqFOwpN2UnyR3yZ3k8ovHrwGP5uoSuXXD5YRvtCRc1SsIX4vyH+/2HVhWcVmmSzdHautRs00Mh+f066qXWI0mOayQ1qRtjZCT+3MDA/nNQcf6Q7DOC/0xj41mbge6mBb94G1i0MrD0ZWD/EXwM2sI5vYC+Ggf00BvZEmQhU9L2JBvaXGtgjbGCft4G9+gbOW+CfmTFw7snA2TUD5w8NnCE1cA4Y/yy3gfP4Bu5UMHAvhokpP/r9NAbuGLI85ce568vAfW0G7tyzEKjwd18auL/UxpQf/R5hA3dBx+7zdjj3eePfyW7gXn0DbyMYeN/CwBsloUWprMPp9HvwbwUZeO9pEKjlUbsgefDvrhl4O68/stgUDvn9w/4Ny857X+O+YXnVYnWDRERERERERERERERERERERERERESzf26lPPFI7CkpAAAAAElFTkSuQmCC" alt="">
+</a>    
+<h2 class="chat-header">Your chat with user <%= other_user.username %> </h2>
 
     <div class="page-wrapper">
 
